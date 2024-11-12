@@ -6,7 +6,7 @@ A Metatrader 5 server is hosted on a PC, which broadcasts MQTT data. This data i
 
 ## Architecture
 
-![System architecture](architecture.png)
+![System architecture](res/architecture.png)
 
 ## Hardware
 
@@ -17,7 +17,7 @@ A Metatrader 5 server is hosted on a PC, which broadcasts MQTT data. This data i
 - 3D Printed Display Case
 
 ### Schematics
-![Electronic Schematics](schematic.png)
+![Electronic Schematics](res/schematic.png)
 
 ## Software
 
@@ -42,10 +42,10 @@ You may choose to run this script in the background or as a service.
 
 ## Showcase
 
-<img src="assembly.jpg" alt="drawing" width="45%"/>
-<img src="power.jpg" alt="drawing" width="45%"/>
-<img src="connection.jpg" alt="drawing" width="45%"/>
-<img src="display.jpg" alt="drawing" width="45%"/>
+<img src="res/assembly.jpg" alt="drawing" width="40%"/>
+<img src="res/power.jpg" alt="drawing" width="40%"/>
+<img src="res/connection.jpg" alt="drawing" width="40%"/>
+<img src="res/display.jpg" alt="drawing" width="40%"/>
 
 
 ## Future Improvements
