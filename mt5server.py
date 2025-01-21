@@ -1,5 +1,4 @@
 import time
-import json
 import configparser
 import MetaTrader5 as mt5
 import paho.mqtt.client as mqtt
@@ -8,8 +7,6 @@ config = configparser.ConfigParser()
 config.read('mt5account.ini')  # load configuration file
 
 MT5_EXE = config.get('MetaTrader', 'exe_path')
-MT5_ACCOUNT = int(config.get('MetaTrader', 'account_number'))
-MT5_PASS = config.get('MetaTrader', 'password')
 MT5_SERVER = config.get('MetaTrader', 'server')
 
 def create_json_obj(symbol, volume, profit):
@@ -18,7 +15,6 @@ def create_json_obj(symbol, volume, profit):
         "volume": volume,
         "profit": profit
     }
-
 
 class MT5Client():
 
@@ -32,14 +28,7 @@ class MT5Client():
         self.mqtt_client.disconnect()
 
     def init_mt5(self):
-        while not mt5.initialize(
-           MT5_EXE,
-           login=MT5_ACCOUNT,
-           password=MT5_PASS,
-           server=MT5_SERVER,
-           timeout=10,
-           portable=False
-           ):
+        while not mt5.initialize():
             print(f"Reattempting login: {mt5.last_error()}")
 
         self.get_account_info()
@@ -61,17 +50,25 @@ def main():
     mt5client = MT5Client()
     bal_topic = "mt5/balance"
     eq_topic = "mt5/equity"
+    margin_topic = "mt5/margin"
+    profit_topic = "mt5/profit"
     equity = 0
 
     while True:
         day = time.localtime().tm_wday
         # From Mon-Fri and Sun
         if (0 <= day <= 4) or (day == 6):
-            if mt5client.get_account_info().equity != equity:
-                equity = mt5client.get_account_info().equity
-                balance = mt5client.get_account_info().balance
-                mt5client.publish_to_topic(eq_topic, equity)
-                mt5client.publish_to_topic(bal_topic, balance)
+            equity = mt5client.get_account_info().equity
+            balance = mt5client.get_account_info().balance
+            margin = mt5client.get_account_info().margin
+            profit = mt5client.get_account_info().profit
+            mt5client.publish_to_topic(bal_topic, balance)
+            time.sleep(60)
+            mt5client.publish_to_topic(eq_topic, equity)
+            time.sleep(60)
+            mt5client.publish_to_topic(margin_topic, margin)
+            time.sleep(60)
+            mt5client.publish_to_topic(profit_topic, profit)
             time.sleep(60)
         else:
             time.sleep(23*60*60)
