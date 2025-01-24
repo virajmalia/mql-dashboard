@@ -55,6 +55,8 @@ def main():
     eq_topic = "mt5/equity"
     margin_topic = "mt5/margin"
     profit_topic = "mt5/profit"
+    num_pos_topic = "mt5/num_pos"
+    pos_topic = "mt5/pos_topic"
     equity = 0
 
     while True:
@@ -65,14 +67,18 @@ def main():
             balance = mt5server.get_account_info().balance
             margin = mt5server.get_account_info().margin
             profit = mt5server.get_account_info().profit
+            num_positions = mt5server.positions_total()
+            positions = mt5server.positions_get()
             mt5server.publish_to_topic(bal_topic, balance)
-            time.sleep(60)
+            time.sleep(20)
             mt5server.publish_to_topic(eq_topic, equity)
-            time.sleep(60)
+            time.sleep(20)
             mt5server.publish_to_topic(margin_topic, margin)
-            time.sleep(60)
+            time.sleep(20)
             mt5server.publish_to_topic(profit_topic, profit)
-            time.sleep(60)
+            time.sleep(20)
+            mt5server.publish_to_topic(num_pos_topic, num_positions)
+            mt5server.publish_to_topic(pos_topic, positions)
         else:
             time.sleep(23*60*60)
 
