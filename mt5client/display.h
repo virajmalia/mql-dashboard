@@ -128,6 +128,10 @@ void drawInitialDisplay() {
         
         display.drawFastHLine(SECTION_MARGIN, secondSeparatorY, 
                             DISPLAY_WIDTH - 2 * SECTION_MARGIN, GxEPD_BLACK);
+        updateMetrics(1);
+        updateMetrics(2);
+        updateMetrics(3);
+        updateMetrics(4);
     } while (display.nextPage());
 }
 
