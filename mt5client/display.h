@@ -135,40 +135,40 @@ void updateMetrics(const int updateParam) {
     char buffer[MAX_STRING_LENGTH];
     
     // Update balance if changed
-    //if (finData.balance != prevFinData.balance) {
+    if (finData.balance != prevFinData.balance) {
       if (updateParam == 1){
         formatValue(buffer, finData.balance, "$%.2f");
         drawMetricPartial("Balance", buffer, metricPos.balance);
         prevFinData.balance = finData.balance;
       }
-    //}
+    }
     
     // Update equity if changed
-    //if (finData.equity != prevFinData.equity) {
+    if (finData.equity != prevFinData.equity) {
       if (updateParam == 2){
         formatValue(buffer, finData.equity, "$%.2f");
         drawMetricPartial("Equity", buffer, metricPos.equity);
         prevFinData.equity = finData.equity;
       }
-    //}
+    }
     
     // Update margin if changed
-    //if (finData.margin != prevFinData.margin) {
+    if (finData.margin != prevFinData.margin) {
       if (updateParam == 3){
         formatValue(buffer, finData.margin, "$%.2f");
         drawMetricPartial("Margin", buffer, metricPos.margin);
         prevFinData.margin = finData.margin;
       }
-    //}
+    }
     
     // Update profit if changed
-    //if (finData.profit != prevFinData.profit) {
+    if (finData.profit != prevFinData.profit) {
       if (updateParam == 4) {
         formatValue(buffer, finData.profit, "$%.2f");
         drawMetricPartial("Profit", buffer, metricPos.profit);
         prevFinData.profit = finData.profit;
       }
-    //}
+    }
 }
 
 #endif  // POSITIONS_H

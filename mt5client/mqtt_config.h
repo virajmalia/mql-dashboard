@@ -28,7 +28,8 @@ struct FinancialData {
     float profit;
     
     FinancialData() : balance(0.0f), equity(0.0f), margin(0.0f), profit(0.0f) {}
-} finData, prevFinData;
+    FinancialData(float x) : balance(x), equity(x), margin(x), profit(x) {}
+} finData, prevFinData(1);
 
 // Declaration
 void updateMetrics(const int updateParam);
