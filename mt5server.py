@@ -15,14 +15,11 @@ class MT5Server():
     # Parameters
     ac_info = None
     positions = None
-
-    # Lists to hold multiple positions
     pos_syms = []
     pos_vol = []
     pos_type = []
     pos_profit = []
 
-    # Output strings with positions info
     open_syms = None
     open_vol = None
     open_type = None
@@ -55,6 +52,12 @@ class MT5Server():
 
     def positions_get(self):
         """Get all Open Positions"""
+        # Cleanup previous values
+        self.pos_syms.clear()
+        self.pos_vol.clear()
+        self.pos_type.clear()
+        self.pos_profit.clear()
+
         self.positions = mt5.positions_get()
         for position in self.positions:
             self.pos_syms.append(position[16])
@@ -89,7 +92,7 @@ def main():
     syms_topic = "mt5/open_syms"
     vol_topic = "mt5/open_vol"
     type_topic = "mt5/open_type"
-    profit_topic = "mt5/open_profit"
+    pos_profit_topic = "mt5/open_profit"
     equity = 0
 
     while True:
@@ -102,13 +105,9 @@ def main():
             margin = mt5server.get_account_info().margin
             profit = mt5server.get_account_info().profit
             mt5server.publish_to_topic(bal_topic, balance)
-            time.sleep(20)
             mt5server.publish_to_topic(eq_topic, equity)
-            time.sleep(20)
             mt5server.publish_to_topic(margin_topic, margin)
-            time.sleep(20)
             mt5server.publish_to_topic(profit_topic, profit)
-            time.sleep(20)
             # Positions
             num_positions = mt5server.positions_total()
             mt5server.positions_get()
@@ -116,7 +115,8 @@ def main():
             mt5server.publish_to_topic(syms_topic, mt5server.open_syms)
             mt5server.publish_to_topic(vol_topic, mt5server.open_vol)
             mt5server.publish_to_topic(type_topic, mt5server.open_type)
-            mt5server.publish_to_topic(profit_topic, mt5server.open_profit)
+            mt5server.publish_to_topic(pos_profit_topic, mt5server.open_profit)
+            time.sleep(60)
         else:
             time.sleep(23*60*60)
 
