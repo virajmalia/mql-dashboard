@@ -105,9 +105,13 @@ def main():
             margin = mt5server.get_account_info().margin
             profit = mt5server.get_account_info().profit
             mt5server.publish_to_topic(bal_topic, balance)
+            time.sleep(20)
             mt5server.publish_to_topic(eq_topic, equity)
+            time.sleep(20)
             mt5server.publish_to_topic(margin_topic, margin)
+            time.sleep(20)
             mt5server.publish_to_topic(profit_topic, profit)
+            time.sleep(20)
             # Positions
             num_positions = mt5server.positions_total()
             mt5server.positions_get()
@@ -116,7 +120,7 @@ def main():
             mt5server.publish_to_topic(vol_topic, mt5server.open_vol)
             mt5server.publish_to_topic(type_topic, mt5server.open_type)
             mt5server.publish_to_topic(pos_profit_topic, mt5server.open_profit)
-            time.sleep(60)
+            time.sleep(20)
         else:
             time.sleep(23*60*60)
 
